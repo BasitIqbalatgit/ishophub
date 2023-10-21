@@ -6,9 +6,9 @@ import SignUp from './Components/signup';
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <SignUp /> */}
+      <SignUp />
 
-      <Login />
+      {/* <Login /> */}
       {/* <Register /> */}
       {/* <Login /> */}
     </View>

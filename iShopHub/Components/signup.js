@@ -4,6 +4,10 @@ import { View, Text, TextInput, Button, StyleSheet, ImageBackground ,TouchableOp
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 const Register = () => {
+  
+
+  const [isPressed,setIsPressed] = useState(false);
+  
     const [name,setname]=useState('');
     const [email,setemail]=useState("");
     const [password,setpassword]=useState("");
@@ -52,11 +56,12 @@ const Register = () => {
           </View>
           <TextInput style={styles.input} placeholder="Confrim password" />
         </View>
-        <TouchableOpacity style={styles.buttonContainer}>
-        <View style={styles.buttonContent}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+        <TouchableOpacity style={styles.buttonContainer} onPressIn={()=>setIsPressed(true)}
+          onPressOut={()=>setIsPressed(false)}>
+        {/* <View style={styles.buttonContent}> */}
+        <Text style={[styles.buttonText, isPressed ? {color:"black"}: ""]}>Sign Up</Text>
           <Icon name="ios-arrow-forward" size={20} color="white" style={styles.buttonIcon} />
-        </View>
+        {/* </View> */}
       </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -112,13 +117,14 @@ const styles = StyleSheet.create({
     marginStart: 200,
     width: 150,
     height: 45,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+  // buttonContent: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  // },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ImageBackground,TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Login = () => {
+
+
+  const [isPressed,setIsPressed] = useState(false);
+  
   return (
     <ImageBackground
       style={styles.background}
@@ -23,11 +27,12 @@ const Login = () => {
           </View>
           <TextInput style={styles.input} placeholder="Password" secureTextEntry={true} />
         </View>
-        <TouchableOpacity style={styles.buttonContainer}>
-        <View style={styles.buttonContent}>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity style={styles.buttonContainer} onPressIn={()=>setIsPressed(true)}
+          onPressOut={()=>setIsPressed(false)}>
+        {/* <View style={styles.buttonContent} > */}
+          <Text style={[styles.buttonText, isPressed ? {color:"black"}: ""]}>Login</Text>
           <Icon name="arrow-right" size={20} color="white" style={styles.buttonIcon} />
-        </View>
+        {/* </View> */}
       </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -83,13 +88,14 @@ const styles = StyleSheet.create({
     marginStart: 200,
     width: 150,
     height: 45,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+  // buttonContent: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  // },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
