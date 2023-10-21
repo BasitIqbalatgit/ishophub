@@ -1,69 +1,88 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ImageBackground ,TouchableOpacity} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ImageBackground, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 //import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
-const Register = () => {
-  
+const Register = ({ navigation }) => {
 
-  const [isPressed,setIsPressed] = useState(false);
-  
-    const [name,setname]=useState('');
-    const [email,setemail]=useState("");
-    const [password,setpassword]=useState("");
-    const [pw,setpw]=useState("");
-    const [data,setdata]=useState('');
-    const [showdata,setshowdata]=useState(false);
 
-    const handleButtonPress=()=>{
-        setshowdata(true);
-        setdata([...data,{name,email,password,pw}]);
-        setname("");
-        setemail("");
-        setpassword("");
-        setpw("");
-    }
-   
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const data = [];
+
+  // const handleButtonPress = () => {
+  //   setshowdata(true);
+  //   // setdata([...data,{name,email,password,pw}]);
+  //   setname("");
+  //   setemail("");
+  //   setpassword("");
+  //   setpw("");
+  // }
+
+
+  const handleSignupNavigation = () => {
+    navigation.navigate('Home', { data: [...data, { name, email, password, confirmPassword }] });
+  };
+
+
   return (
     <ImageBackground
       style={styles.background}
       source={require('../images/2.png')}
       resizeMode='stretch'
     >
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <Text style={styles.loginText}>Sign up</Text>
+        {/* Name -----------------------------> */}
         <View style={styles.inputContainer}>
           <View style={styles.iconContainer}>
             <Icon name="ios-person" size={20} color="gray" style={styles.icon} />
           </View>
-          <TextInput style={styles.input} placeholder="Name"  />
+          <TextInput style={styles.input} placeholder="Name" value={name} autoCorrect={false} 
+            onChangeText={(text) => setName(text)} />
         </View>
+        {/* Email -------------------------------> */}
         <View style={styles.inputContainer}>
           <View style={styles.iconContainer}>
             <Icon name="ios-mail" size={20} color="gray" style={styles.icon} />
           </View>
-          <TextInput style={styles.input} placeholder="Email" />
+          <TextInput style={styles.input}  autoCapitalize="none" autoCorrect={false} 
+           placeholder="Email" value={email} onChangeText={(text)=>setEmail(text)}/>
         </View>
+        {/* Pasword ------------------------------------> */}
         <View style={styles.inputContainer}>
           <View style={styles.iconContainer}>
             <Icon name="ios-lock-closed" size={20} color="gray" style={styles.icon} />
           </View>
-          <TextInput style={styles.input} placeholder="Password" />
+          <TextInput style={styles.input} secureTextEntry={true} autoCapitalize="none"  autoCorrect={false}
+           placeholder="Password" value={password} onChangeText={(text)=>setPassword(text)}/>
         </View>
+
+        {/* Confirm Password -----------------------------> */}
         <View style={styles.inputContainer}>
           <View style={styles.iconContainer}>
             <Icon name="ios-lock-closed" size={20} color="gray" style={styles.icon} />
           </View>
-          <TextInput style={styles.input} placeholder="Confrim password" />
+          <TextInput style={styles.input}  secureTextEntry={true} autoCapitalize="none" autoCorrect={false}
+           placeholder="Confrim password" value={confirmPassword} onChangeText={(text)=>setConfirmPassword(text)}/>
         </View>
-        <TouchableOpacity style={styles.buttonContainer} onPressIn={()=>setIsPressed(true)}
-          onPressOut={()=>setIsPressed(false)}>
-        {/* <View style={styles.buttonContent}> */}
-        <Text style={[styles.buttonText, isPressed ? {color:"black"}: ""]}>Sign Up</Text>
+        {/* Signup Button -------------------------------------> */}
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleSignupNavigation}>
+          {/* <View style={styles.buttonContent}> */}
+          <Text style={styles.buttonText}>Sign Up</Text>
           <Icon name="ios-arrow-forward" size={20} color="white" style={styles.buttonIcon} />
-        {/* </View> */}
-      </TouchableOpacity>
-      </View>
+          {/* </View> */}
+        </TouchableOpacity>
+          {/* already have accont ---------------------------------> */}
+        <View style={{ flexDirection: "row", marginTop: 26 }}>
+          <Text>Already have an Account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={{ textDecorationLine: "underline", color: "deepskyblue" }}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
@@ -94,8 +113,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     width: 350,
     height: 40,
-    borderColor: 'deepskyblue', 
-    borderWidth: 1, 
+    borderColor: 'deepskyblue',
+    borderWidth: 1,
   },
   iconContainer: {
     width: 40,
